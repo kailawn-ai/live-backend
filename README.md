@@ -48,6 +48,7 @@ cp .env.example .env
 ```
 
 Change `ADMIN_PASSWORD` and `JWT_SECRET` before using this outside local development.
+Set `JWT_EXPIRES_DAYS` to control how long browsers stay signed in.
 
 Make sure MySQL is running, then set these values in `.env`:
 

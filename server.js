@@ -16,6 +16,7 @@ const FRONTEND_ORIGIN = process.env.FRONTEND_ORIGIN || 'http://127.0.0.1:5174';
 const ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'admin@zostream.test';
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'change-this-password';
 const JWT_SECRET = process.env.JWT_SECRET || 'dev-secret-change-me';
+const JWT_EXPIRES_DAYS = Number(process.env.JWT_EXPIRES_DAYS || 30);
 
 let streamStore;
 let authController;
@@ -205,7 +206,7 @@ function requireAdmin(req) {
 
 function signToken(payload) {
 	const header = base64Url(JSON.stringify({ alg: 'HS256', typ: 'JWT' }));
-	const expiresAt = Math.floor(Date.now() / 1000) + 60 * 60 * 12;
+	const expiresAt = Math.floor(Date.now() / 1000) + 60 * 60 * 24 * JWT_EXPIRES_DAYS;
 	const body = base64Url(JSON.stringify({ ...payload, exp: expiresAt }));
 	const signature = hmac(`${header}.${body}`);
 
